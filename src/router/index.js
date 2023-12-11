@@ -1,7 +1,7 @@
 const express = require('express');
 
-const localesRouter = require('../models/locale');
-const tasksRouter = require('../models/task');
+const localesRouter = require('../modules/locales');
+const tasksRouter = require('../modules/tasks');
 
 const router = express.Router();
 
