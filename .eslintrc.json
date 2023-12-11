@@ -1,0 +1,19 @@
+{
+	"extends": [
+		"airbnb" // basically we use airbnb rules however we have to turn off some of them because of using next.js
+	],
+	"rules": {
+		// our own rules
+		"react/function-component-definition": "off",
+		"indent": ["error", "tab"],
+		"linebreak-style": "off",
+		"no-underscore-dangle": "off",
+		"no-tabs": "off",
+		"no-param-reassign": "off",
+		"class-methods-use-this": "off",
+		"object-curly-newline": "off"
+	},
+	"globals": {
+		"React": "readonly"
+	}
+}
