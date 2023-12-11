@@ -16,9 +16,9 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  res.json({
-    message: '🦄🌈✨👋🌎🌍🌏✨🌈🦄',
-  });
+	res.json({
+		message: '🦄🌈✨👋🌎🌍🌏✨🌈🦄',
+	});
 });
 
 app.use('/api/', api);
