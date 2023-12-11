@@ -6,7 +6,7 @@ const localesRouter = new Router();
 const localesController = new LocalesController();
 
 localesRouter
-	.get('/locals', localesController.getLocales)
-	.post('/locals', localesController.createNewLocale);
+	.get('/locales', localesController.getLocales)
+	.post('/locales', localesController.createNewLocale);
 
 module.exports = localesRouter;
