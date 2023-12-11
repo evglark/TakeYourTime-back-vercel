@@ -10,9 +10,9 @@ class LocalesController extends Controller {
 
 	async getLocales(req, res) {
 		try {
-			const locales = await Locale.find();
+			// const locales = await Locale.find();
 
-			res.json({ locales });
+			res.json({ mull: null });
 		} catch (error) {
 			console.error(error);
 			res.status(500).json({ error });
