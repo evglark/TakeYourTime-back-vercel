@@ -6,7 +6,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 const middlewares = require('./middlewares');
-const api = require('./api');
+const router = require('./router');
 
 const app = express();
 
@@ -16,12 +16,10 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
-	res.json({
-		message: '🦄🌈✨👋🌎🌍🌏✨🌈🦄',
-	});
+	res.json({ message: '🦄🌈✨👋🌎🌍🌏✨🌈🦄' });
 });
 
-app.use('/api/', api);
+app.use('/api', router);
 
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
