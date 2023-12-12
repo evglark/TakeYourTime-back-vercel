@@ -7,7 +7,7 @@ const env = require('../../helpers/environments');
 const LocalesController = () => {
 	const POSTGRES_URL = env.getEnvironment('POSTGRES_URL');
 	const client = new Client({
-		connectionString: POSTGRES_URL,
+		connectionString: `${POSTGRES_URL}?sslmode=require`,
 	});
 
 	const getLocales = async (req, res) => {

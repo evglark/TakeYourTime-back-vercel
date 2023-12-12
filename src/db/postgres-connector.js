@@ -1,8 +1,8 @@
 const { Client } = require('pg');
 
-const postgresConnector = (connectionString) => {
+const postgresConnector = (POSTGRES_URL) => {
 	const client = new Client({
-		connectionString,
+		connectionString: `${POSTGRES_URL}?sslmode=require`,
 	});
 
 	client.connect()
