@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Locale = require('../../models/locale');
 
 class LocalesController {
@@ -7,9 +8,8 @@ class LocalesController {
 
 	async getLocales(req, res) {
 		try {
-			const locales = await Locale.find();
-
-			res.json({ locales });
+			// const locales = await Locale.find();
+			res.json({ locales: [], port: mongoose.connection.port });
 		} catch (error) {
 			console.error(error);
 			res.status(500).json({ error });
