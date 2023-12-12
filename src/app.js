@@ -10,11 +10,13 @@ const env = require('./helpers/environments');
 const router = require('./router');
 const connect = require('./db');
 
-const MONGO_URL = env.getEnvironment('MONGO_URL');
+// const MONGO_URL = env.getEnvironment('MONGO_URL');
+const POSTGRES_URL = env.getEnvironment('POSTGRES_URL');
 
 const app = express();
 
-connect.mongo(MONGO_URL);
+// connect.mongo(MONGO_URL);
+connect.postgres(POSTGRES_URL);
 
 app.use(logger('dev'));
 app.use(express.json());

@@ -1,32 +1,43 @@
 // const mongoose = require('mongoose');
-const Locale = require('../../models/locale');
+// const Locale = require('../../models/locale');
+const { Client } = require('pg');
 
-class LocalesController {
-	constructor() {
-		this.localSchema = Object.keys(Locale.schema.obj);
-	}
+const env = require('../../helpers/environments');
 
-	async getLocales(req, res) {
+const LocalesController = () => {
+	const POSTGRES_URL = env.getEnvironment('POSTGRES_URL');
+	const client = new Client({
+		connectionString: POSTGRES_URL,
+	});
+
+	const getLocales = async (req, res) => {
 		try {
-			// const locales = await Locale.find();
-			res.json({ locales: [] });
+			await client.connect();
+			const result = await client.query('SELECT * FROM locales');
+
+			res.json({ locales: result.rows });
 		} catch (error) {
-			console.error(error);
+			res.status(500).json({ error });
+		} finally {
+			await client.end();
+		}
+	};
+
+	const createNewLocale = async (req, res) => {
+		try {
+			// const { key, value, locale } = req.body;
+			// const newLocale = await Locale.create({ key, value, locale });
+
+			// res.json({ newLocale });
+		} catch (error) {
 			res.status(500).json({ error });
 		}
-	}
+	};
 
-	async createNewLocale(req, res) {
-		try {
-			const { key, value, locale } = req.body;
-			const newLocale = await Locale.create({ key, value, locale });
+	return ({
+		getLocales,
+		createNewLocale,
+	});
+};
 
-			res.json({ newLocale });
-		} catch (error) {
-			console.error(error);
-			res.status(500).json({ error });
-		}
-	}
-}
-
-module.exports = LocalesController;
+module.exports = LocalesController();
