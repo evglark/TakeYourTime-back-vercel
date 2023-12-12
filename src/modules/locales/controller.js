@@ -18,9 +18,10 @@ const LocalesController = () => {
 			res.json({ locales: result.rows });
 		} catch (error) {
 			res.status(500).json({ error });
-		} finally {
-			await client.end();
 		}
+		// } finally {
+		// 	await client.end();
+		// }
 	};
 
 	const createNewLocale = async (req, res) => {
