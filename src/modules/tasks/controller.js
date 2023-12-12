@@ -1,10 +1,7 @@
-const Controller = require('../../helpers/controller');
 const Task = require('../../models/task');
 
-class TaskController extends Controller {
+class TaskController {
 	constructor() {
-		super();
-
 		this.taskSchema = Object.keys(Task.schema.obj);
 	}
 

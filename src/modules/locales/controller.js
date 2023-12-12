@@ -1,10 +1,7 @@
-const Controller = require('../../helpers/controller');
 const Locale = require('../../models/locale');
 
-class LocalesController extends Controller {
+class LocalesController {
 	constructor() {
-		super();
-
 		this.localSchema = Object.keys(Locale.schema.obj);
 	}
 
