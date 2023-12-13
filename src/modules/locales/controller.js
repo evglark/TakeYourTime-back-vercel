@@ -28,19 +28,62 @@ const LocalesController = () => {
 	};
 
 	const createNewLocale = async (req, res) => {
-		try {
-			// const { key, value, locale } = req.body;
-			// const newLocale = await Locale.create({ key, value, locale });
+		const client = getClient();
 
-			// res.json({ newLocale });
+		try {
+			const { key, value, locale } = req.body;
+			if (key && value && locale) {
+				await client.connect();
+
+				const localeExists = await client.query(
+					'SELECT * FROM locales WHERE key = $1 AND locale = $2',
+					[key, locale],
+				);
+
+				if (localeExists.rowCount > 0) {
+					res.status(409).json({ message: 'Locale already exists' });
+				} else {
+					const result = await client.query(
+						'INSERT INTO locales (key, value, locale) VALUES ($1, $2, $3) RETURNING *',
+						[key, value, locale],
+					);
+
+					res.status(200).json({ locale: result.rows[0] });
+				}
+			} else {
+				res.status(422).json({ message: 'Unprocessable Entity' });
+			}
 		} catch (error) {
 			res.status(500).json({ error });
+		} finally {
+			await client.end();
+		}
+	};
+
+	const deleteLocale = async (req, res) => {
+		const client = getClient();
+
+		try {
+			const { key, value, locale } = req.body;
+
+			await client.connect();
+			const result = await client.query(
+				'DELETE FROM locales WHERE key = $1 AND value = $2 AND locale = $3 RETURNING *',
+				[key, value, locale],
+			);
+
+			res.status(200).json({ message: 'Locales deleted', locales: result.rows });
+		} catch (error) {
+			res.status(500).json({ error });
+		} finally {
+			await client.end();
 		}
 	};
 
 	return ({
 		getLocales,
 		createNewLocale,
+		deleteLocale,
 	});
 };
 
