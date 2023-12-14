@@ -7,6 +7,7 @@ const localesRouter = new Router();
 localesRouter
 	.get('/locales', localesController.getLocales)
 	.post('/locales', localesController.createNewLocale)
+	.put('/locales', localesController.editOldLocale)
 	.delete('/locales', localesController.deleteLocale);
 
 module.exports = localesRouter;

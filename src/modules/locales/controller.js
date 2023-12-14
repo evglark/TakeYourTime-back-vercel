@@ -60,6 +60,40 @@ const LocalesController = () => {
 		}
 	};
 
+	const editOldLocale = async (req, res) => {
+		const client = getClient();
+
+		try {
+			const { key, value, locale } = req.body;
+
+			if (key && value && locale) {
+				await client.connect();
+
+				const localeExists = await client.query(
+					'SELECT * FROM locales WHERE key = $1 AND locale = $2',
+					[key, locale],
+				);
+
+				if (localeExists.rowCount === 0) {
+					res.status(404).json({ message: 'Locale not found' });
+				} else {
+					const result = await client.query(
+						'UPDATE locales SET value = $1 WHERE key = $2 RETURNING *',
+						[value, key, locale],
+					);
+
+					res.status(200).json({ locale: result.rows[0] });
+				}
+			} else {
+				res.status(422).json({ message: 'Unprocessable Entity' });
+			}
+		} catch (error) {
+			res.status(500).json({ error });
+		} finally {
+			await client.end();
+		}
+	};
+
 	const deleteLocale = async (req, res) => {
 		const client = getClient();
 
@@ -83,6 +117,7 @@ const LocalesController = () => {
 	return ({
 		getLocales,
 		createNewLocale,
+		editOldLocale,
 		deleteLocale,
 	});
 };
