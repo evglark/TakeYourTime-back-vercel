@@ -78,7 +78,7 @@ const LocalesController = () => {
 					res.status(404).json({ message: 'Locale not found' });
 				} else {
 					const result = await client.query(
-						'UPDATE locales SET value = $1 WHERE key = $2 RETURNING *',
+						'UPDATE locales SET value = $1 WHERE key = $2 AND locale = $3 RETURNING *',
 						[value, key, locale],
 					);
 
