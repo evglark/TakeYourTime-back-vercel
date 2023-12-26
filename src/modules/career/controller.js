@@ -40,7 +40,7 @@ const CareersController = () => {
 					[name, phone, email, about],
 				);
 
-				res.status(200).json({ locale: result.rows[0] });
+				res.status(200).json({ careers: result.rows[0] });
 			} else {
 				res.status(422).json({ message: 'Unprocessable Entity' });
 			}
@@ -64,7 +64,7 @@ const CareersController = () => {
 				[id],
 			);
 
-			res.status(200).json({ message: 'Locales deleted', locales: result.rows });
+			res.status(200).json({ message: 'Careers deleted', careers: result.rows });
 		} catch (error) {
 			res.status(500).json({ error });
 		} finally {
